@@ -24,24 +24,25 @@ class CategoriesController extends CategoriesAppController {
  *
  * @var array
  */
-	//public $uses = array();
+	public $uses = array(
+		'Categories.Category',
+	);
 
 /**
  * use component
  *
  * @var array
  */
-	//public $components = array();
+	public $components = array();
 
 /**
- * beforeFilter
+ * use helpers
  *
- * @return void
+ * @var array
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this->Auth->allow();
-	}
+	public $helpers = array(
+		'NetCommons.Token'
+	);
 
 /**
  * index method
@@ -51,35 +52,5 @@ class CategoriesController extends CategoriesAppController {
  */
 	public function index($frameId = 0) {
 		return $this->render('Categories/index');
-	}
-
-/**
- * view method
- *
- * @param int $frameId frames.id
- * @return CakeResponse A response object containing the rendered view.
- */
-	public function view($frameId = 0) {
-		return $this->render('Categories/view');
-	}
-
-/**
- * form method
- *
- * @param int $frameId frames.id
- * @return CakeResponse A response object containing the rendered view.
- */
-	public function form($frameId = 0) {
-		return $this->render('Categories/form');
-	}
-
-/**
- * edit method
- *
- * @param int $frameId frames.id
- * @return string JSON that indicates success
- */
-	public function edit($frameId = 0) {
-		return;
 	}
 }
