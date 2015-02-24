@@ -40,7 +40,7 @@ class Category extends CategoriesAppModel {
 			'order' => ''
 		),
 		'CategoryOrder' => array(
-			'className' => 'Faqs.CategoryOrder',
+			'className' => 'Categories.CategoryOrder',
 			'foreignKey' => 'key',
 			'conditions' => '',
 			'fields' => '',
@@ -78,15 +78,28 @@ class Category extends CategoriesAppModel {
 	}
 
 /**
- * getCategoryList
+ * getCategoryOptions
  *
  * @param int $blockId blocks.id
  * @return array
  */
-	public function getCategoryList($blockId) {
+	public function getCategoryOptions($blockId) {
 		$options = $this->__getCategoryListOptions($blockId);
 
 		return $this->find('all', $options);
+	}
+
+/**
+ * getCategoryFormList
+ *
+ * @param int $blockId blocks.id
+ * @return array
+ */
+	public function getCategoryFormList($blockId) {
+		$options = $this->__getCategoryListOptions($blockId);
+		$categoryList['List'] = $this->find('all', $options);
+
+		return $categoryList;
 	}
 
 /**
@@ -95,7 +108,7 @@ class Category extends CategoriesAppModel {
  * @param int $blockId blocks.id
  * @return array
  */
-	private function __getCategoryListOptions($blockId) {
+	private function __getCategoryListOptions($blockId, $callback = false) {
 		return array(
 			'fields' => array(
 				'Category.id',
@@ -104,16 +117,23 @@ class Category extends CategoriesAppModel {
 			),
 			'conditions' => array('Category.block_id' => $blockId),
 			'order' => array('CategoryOrder.weight'),
-			'callbacks' => false,
+			'callbacks' => $callback,
 		);
 	}
 
-	public function getCategoryFormList($blockId) {
-		$options = $this->__getCategoryListOptions($blockId);
-		$categoryList['List'] = $this->find('all', $options);
-
-		return $categoryList;
-	}
+//	public function afterFind($results, $primary = false) {
+//		$tmp = array();
+//		foreach ($results as $key => $val) {
+//			$id = $val['Category']['id'];
+//			$name = $val['Category']['name'];
+//			$tmp[$id] = $name;
+////			$tmp[] = array(
+////				'id' => $val['Category']['id'],
+////				'name' => $val['Category']['name'],
+////			);
+//		}
+//		return $tmp;
+//	}
 
 /**
  * saveCategory

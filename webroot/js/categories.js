@@ -13,7 +13,6 @@ NetCommonsApp.controller('Categories',
 
       $scope.init = function(data) {
         $scope.categoryList = data.categoryList;
-console.log($scope.categoryList);
       };
 
       $scope.addCategory = function() {
