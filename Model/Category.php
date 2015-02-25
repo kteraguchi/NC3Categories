@@ -3,7 +3,7 @@
  * Category Model
  *
  * @property Block $Block
- * @property Faq $Faq
+ * @property Category $Category
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
@@ -121,20 +121,6 @@ class Category extends CategoriesAppModel {
 		);
 	}
 
-//	public function afterFind($results, $primary = false) {
-//		$tmp = array();
-//		foreach ($results as $key => $val) {
-//			$id = $val['Category']['id'];
-//			$name = $val['Category']['name'];
-//			$tmp[$id] = $name;
-////			$tmp[] = array(
-////				'id' => $val['Category']['id'],
-////				'name' => $val['Category']['name'],
-////			);
-//		}
-//		return $tmp;
-//	}
-
 /**
  * saveCategory
  *
@@ -150,9 +136,9 @@ class Category extends CategoriesAppModel {
 //			return false;
 //		}
 
-		$editKeyList = array('default');
+		$editKeyList = array();
 		$editIdList = array();
-		foreach ($data['List'] as $index => $category) {
+		foreach ($data as $index => $category) {
 
 			// カテゴリーの更新
 			if (empty($category['Category']['id'])) {
@@ -163,7 +149,6 @@ class Category extends CategoriesAppModel {
 			if (! $category) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-
 			// カテゴリー順の更新
 			$categoryOrder = array(
 				'CategoryOrder' => array(

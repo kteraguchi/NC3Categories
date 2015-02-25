@@ -24,7 +24,6 @@ class CategoryTest extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.categories.category',
 		'plugin.categories.block',
-		'plugin.categories.faq'
 	);
 
 /**

@@ -14,21 +14,22 @@
 	<div class="col-xs-12 col-md-12">
 		<div class="input-group">
 			<div class="input-group-btn">
-				<button class="btn btn-default"
+				<button type="button" class="btn btn-default"
 						ng-click="sortCategory('up', $index)"
 						ng-disabled="$first">
 					<span class="glyphicon glyphicon-arrow-up"></span>
 				</button>
-				<button class="btn btn-default"
+				<button type="button" class="btn btn-default"
 						ng-click="sortCategory('down', $index)"
 						ng-disabled="$last">
 					<span class="glyphicon glyphicon-arrow-down"></span>
 				</button>
 			</div>
-			<input type="text" name="name{{$index}}" class="form-control" required
-				   ng-model="c.category.name"/>
+			<input type="hidden" name="data[{{$index}}][Category][id]"   ng-value="c.category.id"/>
+			<input type="hidden" name="data[{{$index}}][Category][key]"  ng-value="c.category.key"/>
+			<input type="text"   name="data[{{$index}}][Category][name]" ng-model="c.category.name" class="form-control" required/>
 			<div class="input-group-btn">
-				<button class="btn btn-default"
+				<button type="button" class="btn btn-default"
 						tooltip="<?php echo __d('faqs', 'Delete'); ?>"
 						ng-click="deleteCategory($index)">
 
@@ -40,7 +41,7 @@
 </div>
 
 <div class="text-center">
-	<button class="btn btn-success" ng-click="addCategory()">
+	<button type="button" class="btn btn-success" ng-click="addCategory()">
 		<span class="glyphicon glyphicon-plus"></span>
 		<?php echo __d('faqs', 'Add category'); ?>
 	</button>
