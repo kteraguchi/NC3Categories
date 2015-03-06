@@ -78,38 +78,13 @@ class Category extends CategoriesAppModel {
 	}
 
 /**
- * getCategoryOptions
+ * getCategoryList
  *
  * @param int $blockId blocks.id
  * @return array
  */
-	public function getCategoryOptions($blockId) {
-		$options = $this->__getCategoryListOptions($blockId);
-
-		return $this->find('all', $options);
-	}
-
-/**
- * getCategoryFormList
- *
- * @param int $blockId blocks.id
- * @return array
- */
-	public function getCategoryFormList($blockId) {
-		$options = $this->__getCategoryListOptions($blockId);
-		$categoryList['List'] = $this->find('all', $options);
-
-		return $categoryList;
-	}
-
-/**
- * __getCategoryListOptions
- *
- * @param int $blockId blocks.id
- * @return array
- */
-	private function __getCategoryListOptions($blockId, $callback = false) {
-		return array(
+	public function getCategoryList($blockId) {
+		$options = array(
 			'fields' => array(
 				'Category.id',
 				'Category.key',
@@ -117,8 +92,26 @@ class Category extends CategoriesAppModel {
 			),
 			'conditions' => array('Category.block_id' => $blockId),
 			'order' => array('CategoryOrder.weight'),
-			'callbacks' => $callback,
+			'callbacks' => false,
 		);
+		return $this->find('all', $options);
+	}
+
+
+/**
+ * getCategoryIdList
+ *
+ * @param int $blockId blocks.id
+ * @return array
+ */
+	public function getCategoryIdList($blockId) {
+		$options = array(
+			'fields' => array('id'),
+			'conditions' => array('block_id' => $blockId)
+		);
+		$list = $this->find('list', $options);
+		$idList = array_values($list);
+		return $idList;
 	}
 
 /**
@@ -130,36 +123,36 @@ class Category extends CategoriesAppModel {
  * @return boolean
  * @throws InternalErrorException
  */
-	public function saveCategory($data, $blockId, $blockKey) {
-//		//validationを実行
-//		if (! $this->__validateCategory($data, $blockId)) {
-//			return false;
-//		}
+	public function saveCategory($dataList, $blockId, $blockKey) {
+		//validationを実行
+		if (! $this->__validateCategory($dataList)) {
+			return false;
+		}
 
 		$editKeyList = array();
 		$editIdList = array();
-		foreach ($data as $index => $category) {
+		foreach ($dataList as $index => $data) {
+
+			if (!$category = $this->findById((int)$data['Category']['id'])) {
+				$category = $this->create([
+					'block_id' => $blockId,
+					'key' => Security::hash($this->name . mt_rand() . microtime(), 'md5'),
+				]);
+			}
 
 			// カテゴリーの更新
-			if (empty($category['Category']['id'])) {
-				$category['Category']['block_id'] = $blockId;
-				$category['Category']['key'] = Security::hash($this->name . mt_rand() . microtime(), 'md5');
-			}
+			$category['Category']['name'] = $data['Category']['name'];
 			$category = $this->save($category, false);
 			if (! $category) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 			// カテゴリー順の更新
-			$categoryOrder = array(
-				'CategoryOrder' => array(
-					'category_key' => $category['Category']['key'],
-					'weight' => $index + 1
-				)
+			$category['CategoryOrder'] = array(
+				'category_key' => $category['Category']['key'],
+				'block_key' => $blockKey,
+				'weight' => $index + 1
 			);
-			if (isset($category['Category']['block_id'])) {
-				$categoryOrder['CategoryOrder']['block_key'] = $blockKey;
-			}
-			if (! $this->CategoryOrder->save($categoryOrder, false)) {
+			if (! $this->CategoryOrder->save($category, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
@@ -192,21 +185,17 @@ class Category extends CategoriesAppModel {
  * validate category
  *
  * @param array $data received post data
- * @param int $blockId blocks.id
  * @return mixed object announcement, false error
  */
-	private function __validateCategory($data, $blockId) {
-		foreach($data as $category){
-			// カテゴリ新規登録の場合
-			if (empty($category['Category']['id'])) {
-				$category['Category']['block_id'] = $blockId;
-				// keyの生成
-				$category['Category']['key'] = Security::hash($this->name . mt_rand() . microtime(), 'md5');
+	private function __validateCategory($data) {
+		$errors = array();
+		foreach ($data as $index => $category){
+			$this->set($category);
+			if (! $this->validates()) {
+				$errors[$index] = $this->validationErrors;
 			}
-
-			$this->set($data);
-			return $this->validates();
 		}
+		$this->validationErrors = $errors;
+		return $this->validationErrors ? false : true;
 	}
-
 }
