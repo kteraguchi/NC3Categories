@@ -97,7 +97,6 @@ class Category extends CategoriesAppModel {
 		return $this->find('all', $options);
 	}
 
-
 /**
  * getCategoryIdList
  *
@@ -117,7 +116,7 @@ class Category extends CategoriesAppModel {
 /**
  * saveCategory
  *
- * @param array $data received post data
+ * @param array $dataList received post data
  * @param int $blockId blocks.id
  * @param string $blockKey blocks.key
  * @return boolean
@@ -189,7 +188,7 @@ class Category extends CategoriesAppModel {
  */
 	private function __validateCategory($data) {
 		$errors = array();
-		foreach ($data as $index => $category){
+		foreach ($data as $index => $category) {
 			$this->set($category);
 			if (! $this->validates()) {
 				$errors[$index] = $this->validationErrors;

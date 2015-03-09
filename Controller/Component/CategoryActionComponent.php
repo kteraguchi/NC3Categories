@@ -25,10 +25,22 @@ class CategoryActionComponent extends Component {
  */
 	public $components = array();
 
+/**
+ * Initialize component
+ *
+ * @param Controller $controller Instantiating controller
+ * @return void
+ */
 	public function initialize(Controller $controller) {
-        $this->controller = $controller;
-    }
+		$this->controller = $controller;
+	}
 
+/**
+ * edit method
+ *
+ * @param array $block blocks
+ * @return void
+ */
 	public function edit($block) {
 		$this->__initCategory($block['Block']['id']);
 
@@ -66,6 +78,7 @@ class CategoryActionComponent extends Component {
 /**
  * __initCategory method
  *
+ * @param int $blockId blocks.id
  * @return void
  */
 	private function __initCategory($blockId) {
