@@ -103,6 +103,7 @@ class Category extends CategoriesAppModel {
  * @param int $blockId blocks.id
  * @return array
  */
+<<<<<<< HEAD
 	public function getCategoryFieldList($blockId, $fieldName) {
 		$options = array(
 			'fields' => array($fieldName),
@@ -110,6 +111,16 @@ class Category extends CategoriesAppModel {
 		);
 		$list = $this->find('list', $options);
 		return array_values($list);
+=======
+	public function getCategoryIdList($blockId) {
+		$options = array(
+			'fields' => array('id'),
+			'conditions' => array('block_id' => $blockId)
+		);
+		$list = $this->find('list', $options);
+		$idList = array_values($list);
+		return $idList;
+>>>>>>> 73f14bdb69fdc85be69b35d85a8d21fe7c7c1ad7
 	}
 
 /**
