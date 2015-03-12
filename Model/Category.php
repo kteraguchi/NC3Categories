@@ -103,14 +103,13 @@ class Category extends CategoriesAppModel {
  * @param int $blockId blocks.id
  * @return array
  */
-	public function getCategoryIdList($blockId) {
+	public function getCategoryFieldList($blockId, $fieldName) {
 		$options = array(
-			'fields' => array('id'),
-			'conditions' => array('block_id' => $blockId)
+			'fields' => array($fieldName),
+			'conditions' => array('block_id' => $blockId),
 		);
 		$list = $this->find('list', $options);
-		$idList = array_values($list);
-		return $idList;
+		return array_values($list);
 	}
 
 /**
