@@ -9,22 +9,15 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('Category', 'Categories.Model');
+App::uses('CategoryAppModelTest', 'Categories.Test/Case/Model');
 
 /**
- * Category Test Case
- */
-class CategoryTest extends CakeTestCase {
-
-/**
- * Fixtures
+ * Category Model Test Case
  *
- * @var array
+ * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
+ * @package NetCommons\Categories\Test\Case\Model
  */
-	public $fixtures = array(
-		'plugin.categories.category',
-		'plugin.categories.block',
-	);
+class CategoryTest extends CategoryAppModelTest {
 
 /**
  * setUp method
@@ -37,14 +30,12 @@ class CategoryTest extends CakeTestCase {
 	}
 
 /**
- * tearDown method
+ * test method
  *
  * @return void
  */
-	public function tearDown() {
-		unset($this->Category);
-
-		parent::tearDown();
+	public function test() {
+		$this->assertTrue(true);
 	}
 
 }
