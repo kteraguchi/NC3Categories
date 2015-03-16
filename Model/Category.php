@@ -101,16 +101,16 @@ class Category extends CategoriesAppModel {
  * getCategoryIdList
  *
  * @param int $blockId blocks.id
+ * @param string $fieldName field name
  * @return array
  */
-	public function getCategoryIdList($blockId) {
+	public function getCategoryFieldList($blockId, $fieldName) {
 		$options = array(
-			'fields' => array('id'),
-			'conditions' => array('block_id' => $blockId)
+			'fields' => array($fieldName),
+			'conditions' => array('block_id' => $blockId),
 		);
 		$list = $this->find('list', $options);
-		$idList = array_values($list);
-		return $idList;
+		return array_values($list);
 	}
 
 /**
@@ -119,7 +119,7 @@ class Category extends CategoriesAppModel {
  * @param array $dataList received post data
  * @param int $blockId blocks.id
  * @param string $blockKey blocks.key
- * @return boolean
+ * @return bool
  * @throws InternalErrorException
  */
 	public function saveCategory($dataList, $blockId, $blockKey) {

@@ -43,8 +43,18 @@ class CategoryFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'block_id' => 1,
-			'key' => 'Lorem ipsum dolor sit amet',
-			'name' => 'Lorem ipsum dolor sit amet',
+			'key' => 'category_1',
+			'name' => 'category_1',
+			'created_user' => 1,
+			'created' => '2015-01-28 04:56:56',
+			'modified_user' => 1,
+			'modified' => '2015-01-28 04:56:56'
+		),
+		array(
+			'id' => 2,
+			'block_id' => 1,
+			'key' => 'category_2',
+			'name' => 'category_2',
 			'created_user' => 1,
 			'created' => '2015-01-28 04:56:56',
 			'modified_user' => 1,

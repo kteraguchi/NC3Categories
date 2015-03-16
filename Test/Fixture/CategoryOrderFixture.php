@@ -42,9 +42,19 @@ class CategoryOrderFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'category_key' => 'Lorem ipsum dolor sit amet',
-			'block_key' => 'Lorem ipsum dolor sit amet',
+			'category_key' => 'category_1',
+			'block_key' => 'block_1',
 			'weight' => 1,
+			'created_user' => 1,
+			'created' => '2015-01-28 04:57:05',
+			'modified_user' => 1,
+			'modified' => '2015-01-28 04:57:05'
+		),
+		array(
+			'id' => 2,
+			'category_key' => 'category_2',
+			'block_key' => 'block_1',
+			'weight' => 2,
 			'created_user' => 1,
 			'created' => '2015-01-28 04:57:05',
 			'modified_user' => 1,
