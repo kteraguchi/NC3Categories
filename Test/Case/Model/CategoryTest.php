@@ -26,7 +26,7 @@ class CategoryTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.categories.category',
-		'plugin.comments.user_attributes_user',
+		'plugin.categories.user_attributes_user',
 		'plugin.m17n.language',
 		'plugin.m17n.languages_page',
 		'plugin.users.user',
