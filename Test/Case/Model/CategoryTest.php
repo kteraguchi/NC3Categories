@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('CategoryAppModelTest', 'Categories.Test/Case/Model');
+App::uses('Category', 'Categories.Model');
 
 /**
  * Category Model Test Case
@@ -17,7 +17,20 @@ App::uses('CategoryAppModelTest', 'Categories.Test/Case/Model');
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\Categories\Test\Case\Model
  */
-class CategoryTest extends CategoryAppModelTest {
+class CategoryTest extends CakeTestCase {
+
+/**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'plugin.categories.category',
+		'plugin.comments.user_attributes_user',
+		'plugin.m17n.language',
+		'plugin.m17n.languages_page',
+		'plugin.users.user',
+	);
 
 /**
  * setUp method
@@ -27,6 +40,17 @@ class CategoryTest extends CategoryAppModelTest {
 	public function setUp() {
 		parent::setUp();
 		$this->Category = ClassRegistry::init('Categories.Category');
+	}
+
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->Category);
+
+		parent::tearDown();
 	}
 
 /**
