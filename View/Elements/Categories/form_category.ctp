@@ -1,6 +1,6 @@
 <?php
 /**
- * FaqCategories form category element template
+ * category form element template
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
@@ -9,6 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 ?>
+
 <div class="form-group"
 	 ng-repeat="c in categoryList track by $index">
 	<div class="input-group" ng-class="(validationErrors[$index].name) ? ' has-error' : ''">
@@ -29,26 +30,19 @@
 		<input type="text"   name="data[{{$index}}][Category][name]" ng-model="c.category.name" class="form-control" required/>
 		<div class="input-group-btn">
 			<button type="button" class="btn btn-default"
-					tooltip="<?php echo __d('categories', 'Delete'); ?>"
+					tooltip="<?php echo __d('net_commons', 'Delete'); ?>"
 					ng-click="deleteCategory($index)">
 
 				<span class="glyphicon glyphicon-remove"> </span>
 			</button>
 		</div>
 	</div>
-	<!--
-	<div class="has-error">
-		<div class="help-block" ng-repeat="msg in validationErrors[$index].name">
-			<span ng-bind="msg"></span>
-		</div>
-	</div>
-	 -->
 </div>
 
 <p class="text-center">
 	<button type="button" class="btn btn-success" ng-click="addCategory()">
 		<span class="glyphicon glyphicon-plus"></span>
-		<?php echo __d('categories', 'Add category'); ?>
+		<?php echo __d('categories', 'Add Category'); ?>
 	</button>
 </p>
 
