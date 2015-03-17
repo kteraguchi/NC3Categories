@@ -20,17 +20,23 @@
 			'novalidate' => true,
 		)); ?>
 
-		<?php echo $this->element('Categories.Categories/form_category'); ?>
+		<div class="panel panel-default" >
+			<div class="panel-body has-feedback">
+				<?php echo $this->element('Categories.Categories/form_category'); ?>
+			</div>
 
-		<p class="text-center">
-			<button class="btn btn-default" ng-click="cancel()">
-				<span class="glyphicon glyphicon-remove small"></span>
-				<?php echo __d('net_commons', 'Cancel'); ?>
-			</button>
-			<button class="btn btn-primary">
-				<?php echo __d('net_commons', 'OK'); ?>
-			</button>
-		</p>
+			<div class="panel-footer text-center">
+				<div class="text-center">
+					<button class="btn btn-default" ng-click="cancel()">
+						<span class="glyphicon glyphicon-remove small"></span>
+						<?php echo __d('net_commons', 'Cancel'); ?>
+					</button>
+					<button class="btn btn-primary">
+						<?php echo __d('net_commons', 'OK'); ?>
+					</button>
+				</div>
+			</div>
+		</div>
 
 	<?php echo $this->Form->end(); ?>
 </div>
