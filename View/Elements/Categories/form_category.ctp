@@ -10,6 +10,11 @@
  */
 ?>
 
+<div ng-hide="categoryList.length">
+	<p>
+		<?php echo __d('categories', 'No category.'); ?>
+	</p>
+</div>
 <div class="form-group"
 	 ng-repeat="c in categoryList track by $index">
 	<div class="input-group" ng-class="(validationErrors[$index].name) ? ' has-error' : ''">
@@ -39,10 +44,10 @@
 	</div>
 </div>
 
-<p class="text-center">
+<div class="text-center">
 	<button type="button" class="btn btn-success" ng-click="addCategory()">
 		<span class="glyphicon glyphicon-plus"></span>
 		<?php echo __d('categories', 'Add Category'); ?>
 	</button>
-</p>
+</div>
 
