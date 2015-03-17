@@ -1,0 +1,30 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-03-17 08:04+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /View/Elements/Categories/form_category.ctp:45
+msgid "Add Category"
+msgstr ""
+
+#: Faqs/View/Blocks/edit.ctp:62
+#: Faqs/View/Elements/Faqs/form_faq.ctp:16
+msgid "Category"
+msgstr ""
+
+#: Faqs/View/Elements/Faqs/form_faq.ctp:20
+#: Faqs/View/Faqs/index.ctp:50
+msgid "Select Category"
+msgstr ""
+
