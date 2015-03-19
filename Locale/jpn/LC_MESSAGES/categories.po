@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2015-03-17 08:04+0000\n"
-"PO-Revision-Date: 2015-03-17 17:28+0900\n"
+"PO-Revision-Date: 2015-03-19 11:11+0900\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team:  <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,10 @@ msgstr "カテゴリ追加"
 msgid "Category"
 msgstr "カテゴリ"
 
-#: Faqs/View/Elements/Faqs/form_faq.ctp:20
+#: Faqs/View/Blocks/edit.ctp:75
+msgid "No category."
+msgstr "カテゴリなし"
+
+#: Faqs/View/Elements/Faqs/form_faq.ctp:20 Faqs/View/Faqs/index.ctp:50
 msgid "Select Category"
 msgstr "カテゴリ選択"

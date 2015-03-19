@@ -23,8 +23,11 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
+#: Faqs/View/Blocks/edit.ctp:75
+msgid "No category."
+msgstr ""
+
 #: Faqs/View/Elements/Faqs/form_faq.ctp:20
 #: Faqs/View/Faqs/index.ctp:50
 msgid "Select Category"
 msgstr ""
-
