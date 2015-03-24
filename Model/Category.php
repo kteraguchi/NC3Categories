@@ -143,7 +143,9 @@ class Category extends CategoriesAppModel {
 			$category['Category']['name'] = $data['Category']['name'];
 			$category = $this->save($category, false);
 			if (! $category) {
+				// @codeCoverageIgnoreStart
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				// @codeCoverageIgnoreEnd
 			}
 			// カテゴリー順の更新
 			$category['CategoryOrder'] = array(
@@ -152,7 +154,9 @@ class Category extends CategoriesAppModel {
 				'weight' => $index + 1
 			);
 			if (! $this->CategoryOrder->save($category, false)) {
+				// @codeCoverageIgnoreStart
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				// @codeCoverageIgnoreEnd
 			}
 
 			$editKeyList[] = $category['Category']['key'];
@@ -164,18 +168,14 @@ class Category extends CategoriesAppModel {
 			'Category.block_id' => $blockId,
 			'NOT' => array('Category.key' => $editKeyList),
 		);
-		if (! $this->deleteAll($conditions)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
+		$this->deleteAll($conditions);
 
 		// 不要カテゴリー順の削除
 		$conditions = array(
 			'CategoryOrder.block_key' => $blockKey,
 			'NOT' => array('CategoryOrder.category_key' => $editKeyList),
 		);
-		if (! $this->CategoryOrder->deleteAll($conditions)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
+		$this->CategoryOrder->deleteAll($conditions);
 
 		return true;
 	}

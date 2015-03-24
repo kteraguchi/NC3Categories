@@ -10,9 +10,9 @@ NetCommonsApp.controller('Categories',
       $scope.categoryList = {};
       $scope.validationErrors = {};
 
-      $scope.init = function(data) {
-        $scope.categoryList = data.categoryList;
-        $scope.validationErrors = data.validationErrors;
+      $scope.init = function(categoryList, validationErrors) {
+        $scope.categoryList = categoryList;
+        $scope.validationErrors = validationErrors;
       };
 
       $scope.addCategory = function() {

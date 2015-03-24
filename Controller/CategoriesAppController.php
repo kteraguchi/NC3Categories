@@ -18,13 +18,4 @@ App::uses('AppController', 'Controller');
  * @package NetCommons\Categories\Controller
  */
 class CategoriesAppController extends AppController {
-
-/**
- * use component
- *
- * @var array
- */
-	public $components = array(
-		'Security'
-	);
 }

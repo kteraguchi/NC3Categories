@@ -12,7 +12,7 @@
  * Categories All Test Suite
  *
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
- * @package NetCommons\Faqs\Test\Case
+ * @package NetCommons\Categories\Test\Case
  * @codeCoverageIgnore
  */
 class AllCategoriesTest extends CakeTestSuite {
