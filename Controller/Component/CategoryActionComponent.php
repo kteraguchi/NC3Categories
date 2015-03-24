@@ -43,7 +43,6 @@ class CategoryActionComponent extends Component {
  */
 	public function edit($block) {
 		$this->__initCategory($block['Block']['id']);
-
 		if ($this->controller->request->isGet()) {
 			CakeSession::write('backUrl', $this->controller->request->referer());
 		}
@@ -52,7 +51,7 @@ class CategoryActionComponent extends Component {
 			$this->controller->Category->saveCategory(
 				$this->controller->data, $block['Block']['id'], $block['Block']['key']
 			);
-			if (!$this->__handleValidationError($this->controller->Category->validationErrors)) {
+			if (!$this->controller->handleValidationError($this->controller->Category->validationErrors)) {
 				return;
 			}
 
@@ -62,17 +61,6 @@ class CategoryActionComponent extends Component {
 				$this->controller->redirect($backUrl);
 			}
 		}
-	}
-
-/**
- * _setFrame method
- *
- * @param int $frameId frames.id
- * @return void
- */
-	protected function _setFrame($frameId) {
-		$frame = $this->controller->Frame->getFrame($frameId, $this->controller->plugin);
-		$this->controller->set('frame', $frame['Frame']);
 	}
 
 /**
@@ -87,25 +75,5 @@ class CategoryActionComponent extends Component {
 
 		$results = $this->controller->camelizeKeyRecursive($results);
 		$this->controller->set($results);
-	}
-
-/**
- * Handle validation error
- *
- * @param array $errors validation errors
- * @return bool true on success, false on error
- */
-	private function __handleValidationError($errors) {
-		if ($errors) {
-			$this->controller->validationErrors = $errors;
-			$this->controller->set('validationErrors', $this->controller->validationErrors);
-			if ($this->controller->request->is('ajax')) {
-				$results = ['error' => ['validationErrors' => $errors]];
-				$this->controller->renderJson($results, __d('net_commons', 'Bad Request'), 400);
-			}
-			return false;
-		}
-
-		return true;
 	}
 }
