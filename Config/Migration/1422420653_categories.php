@@ -13,7 +13,7 @@
  * Categories CakeMigration
  *
  * @author    Ryo Ozawa <ozawa.ryo@withone.co.jp>
- * @package   NetCommons\Faqs\Config\Migration
+ * @package   NetCommons\Categories\Config\Migration
  */
 class Categories extends CakeMigration {
 

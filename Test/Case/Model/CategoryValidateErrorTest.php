@@ -19,7 +19,7 @@ App::uses('CategoriesModelTestCase', 'Categories.Test/Case/Model');
 class CategoryValidateErrorTest extends CategoriesModelTestCase {
 
 /**
- * Expect Faq->saveCategory()
+ * Expect Category->saveCategory()
  *
  * @return void
  */

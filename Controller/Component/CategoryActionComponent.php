@@ -14,7 +14,7 @@ App::uses('Component', 'Controller');
  * CategoryAction Component
  *
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
- * @package NetCommons\Faqs\Controller\Component
+ * @package NetCommons\Categories\Controller\Component
  */
 class CategoryActionComponent extends Component {
 

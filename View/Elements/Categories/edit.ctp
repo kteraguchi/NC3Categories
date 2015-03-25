@@ -17,7 +17,7 @@
 		<?php echo h(json_encode($this->validationErrors['Category'])); ?>
 		)">
 
-	<?php echo $this->Form->create('Faq',
+	<?php echo $this->Form->create('Category',
 		array(
 			'name' => 'CategoryForm' . $frameId,
 			'novalidate' => true,
