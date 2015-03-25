@@ -9,8 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 ?>
-<?php echo h(json_encode($categoryList)); ?>
-<?php echo h(json_encode($this->validationErrors['Category'])); ?>
+
 <div id="nc-categories-<?php echo $frameId; ?>"
 	 ng-controller="Categories"
 	 ng-init="init(
