@@ -60,9 +60,9 @@ class CategoryActionComponentTest extends CakeTestCase {
 		'plugin.m17n.language',
 		'plugin.m17n.languages_page',
 		'plugin.pages.page',
+		'plugin.roles.default_role_permission',
 		'plugin.rooms.room',
 		'plugin.rooms.roles_rooms_user',
-		'plugin.roles.default_role_permission',
 		'plugin.rooms.roles_room',
 		'plugin.rooms.room_role_permission',
 	);

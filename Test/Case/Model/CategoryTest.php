@@ -76,7 +76,7 @@ class CategoryTest extends CategoriesModelTestCase {
 	}
 
 /**
- * Expect Faq->saveCategory()
+ * Expect Category->saveCategory()
  *
  * @return void
  */
@@ -118,7 +118,7 @@ class CategoryTest extends CategoriesModelTestCase {
 	}
 
 /**
- * Expect Faq->saveCategory() by add category
+ * Expect Category->saveCategory() by add category
  *
  * @return void
  */

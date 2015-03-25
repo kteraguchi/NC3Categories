@@ -13,7 +13,7 @@
  * Schema file
  *
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
- * @package NetCommons\Faqs\Config\Schema
+ * @package NetCommons\Categories\Config\Schema
  */
 class Schema extends CakeSchema {
 
