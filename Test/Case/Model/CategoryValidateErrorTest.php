@@ -23,37 +23,37 @@ class CategoryValidateErrorTest extends CategoriesModelTestCase {
  *
  * @return void
  */
-	public function testSaveCategory() {
-		//データ生成
-		$blockId = 1;
-		$blockKey = 'block_1';
-		$dataList = array(
-			0 => array(
-				'Category' => array(
-					'id' => '2',
-					'name' => '',
-				),
-			),
-			1 => array(
-				'Category' => array(
-					'id' => '1',
-					'name' => 'category_1',
-				),
-			),
-		);
-
-		//期待値
-		$expected = array(
-			'0' => array(
-				'name' => array(
-					0 => __d('net_commons', 'Invalid request.'),
-				),
-			)
-		);
-
-		//テスト実施
-		$this->__assertSaveCategory('comment', $dataList, $expected, $blockId, $blockKey);
-	}
+	//public function testSaveCategory() {
+	//	//データ生成
+	//	$blockId = 1;
+	//	$blockKey = 'block_1';
+	//	$dataList = array(
+	//		0 => array(
+	//			'Category' => array(
+	//				'id' => '2',
+	//				'name' => '',
+	//			),
+	//		),
+	//		1 => array(
+	//			'Category' => array(
+	//				'id' => '1',
+	//				'name' => 'category_1',
+	//			),
+	//		),
+	//	);
+	//
+	//	//期待値
+	//	$expected = array(
+	//		'0' => array(
+	//			'name' => array(
+	//				0 => __d('net_commons', 'Invalid request.'),
+	//			),
+	//		)
+	//	);
+	//
+	//	//テスト実施
+	//	$this->__assertSaveCategory('comment', $dataList, $expected, $blockId, $blockKey);
+	//}
 
 /**
  * __assertSaveCategory
@@ -65,17 +65,17 @@ class CategoryValidateErrorTest extends CategoriesModelTestCase {
  * @param string $blockKey blocks.key
  * @return void
  */
-	private function __assertSaveCategory($field, $data, $expected, $blockId, $blockKey) {
-		//初期処理
-		$this->setUp();
-		//登録処理実行
-		$result = $this->Category->saveCategory($data, $blockId, $blockKey);
-		//戻り値テスト
-		$this->assertFalse($result, 'Result error: ' . $field . ' ' . print_r($data, true));
-		//validationErrorsテスト
-		$this->assertEquals($this->Category->validationErrors, $expected,
-							'Validation error: ' . $field . ' ' . print_r($this->Category->validationErrors, true) . print_r($data, true));
-		//終了処理
-		$this->tearDown();
-	}
+	//private function __assertSaveCategory($field, $data, $expected, $blockId, $blockKey) {
+	//	//初期処理
+	//	$this->setUp();
+	//	//登録処理実行
+	//	$result = $this->Category->saveCategory($data, $blockId, $blockKey);
+	//	//戻り値テスト
+	//	$this->assertFalse($result, 'Result error: ' . $field . ' ' . print_r($data, true));
+	//	//validationErrorsテスト
+	//	$this->assertEquals($this->Category->validationErrors, $expected,
+	//						'Validation error: ' . $field . ' ' . print_r($this->Category->validationErrors, true) . print_r($data, true));
+	//	//終了処理
+	//	$this->tearDown();
+	//}
 }

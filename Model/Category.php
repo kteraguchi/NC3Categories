@@ -6,7 +6,7 @@
  * @property Category $Category
  *
  * @author Noriko Arai <arai@nii.ac.jp>
- * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
+ * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
@@ -16,8 +16,20 @@ App::uses('CategoriesAppModel', 'Categories.Model');
 
 /**
  * Category Model
+ *
+ * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @package NetCommons\Categories\Model
  */
 class Category extends CategoriesAppModel {
+
+/**
+ * use behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'NetCommons.OriginalKey'
+	);
 
 /**
  * Validation rules
@@ -41,10 +53,10 @@ class Category extends CategoriesAppModel {
 		),
 		'CategoryOrder' => array(
 			'className' => 'Categories.CategoryOrder',
-			'foreignKey' => 'key',
-			'conditions' => '',
+			'foreignKey' => false,
+			'conditions' => 'CategoryOrder.category_key=Category.key',
 			'fields' => '',
-			'order' => '',
+			'order' => array('weight' => 'ASC')
 		),
 	);
 
@@ -59,17 +71,36 @@ class Category extends CategoriesAppModel {
  */
 	public function beforeValidate($options = array()) {
 		$this->validate = array(
-			'id' => array(
-				'numeric' => array(
-					'rule' => array('numeric'),
+			//'id' => array(
+			//	'numeric' => array(
+			//		'rule' => array('numeric'),
+			//		'message' => __d('net_commons', 'Invalid request.'),
+			//		'allowEmpty' => true,
+			//	),
+			//),
+			'block_id' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
 					'message' => __d('net_commons', 'Invalid request.'),
-					'allowEmpty' => true,
+					'allowEmpty' => false,
+					'required' => true,
+				),
+			),
+			'key' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'allowEmpty' => false,
+					'required' => true,
+					'on' => 'update', // Limit validation to 'create' or 'update' operations
 				),
 			),
 			'name' => array(
 				'notEmpty' => array(
 					'rule' => array('notEmpty'),
-					'message' => __d('net_commons', 'Invalid request.'),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('categories', 'Category')),
+					'allowEmpty' => false,
+					'required' => true,
 				),
 			),
 		);
@@ -78,123 +109,117 @@ class Category extends CategoriesAppModel {
 	}
 
 /**
- * getCategoryList
+ * Get categories
  *
  * @param int $blockId blocks.id
- * @return array
+ * @param int $roomId rooms.id
+ * @return array Categories
  */
-	public function getCategoryList($blockId) {
-		$options = array(
-			'fields' => array(
-				'Category.id',
-				'Category.key',
-				'Category.name',
-			),
-			'conditions' => array('Category.block_id' => $blockId),
-			'order' => array('CategoryOrder.weight'),
-			'callbacks' => false,
+	public function getCategories($blockId, $roomId) {
+		$conditions = array(
+			'Block.id' => $blockId,
+			'Block.room_id' => $roomId,
 		);
-		return $this->find('all', $options);
+
+		$categories = $this->find('all', array(
+				'recursive' => 0,
+				'conditions' => $conditions,
+			)
+		);
+
+		return $categories;
 	}
 
 /**
- * getCategoryIdList
+ * Save categories
  *
- * @param int $blockId blocks.id
- * @param string $fieldName field name
- * @return array
- */
-	public function getCategoryFieldList($blockId, $fieldName) {
-		$options = array(
-			'fields' => array($fieldName),
-			'conditions' => array('block_id' => $blockId),
-		);
-		$list = $this->find('list', $options);
-		return array_values($list);
-	}
-
-/**
- * saveCategory
- *
- * @param array $dataList received post data
- * @param int $blockId blocks.id
- * @param string $blockKey blocks.key
- * @return bool
+ * @param array $data received post data
+ * @return bool True on success, false on validation errors
  * @throws InternalErrorException
  */
-	public function saveCategory($dataList, $blockId, $blockKey) {
-		//validationを実行
-		if (! $this->__validateCategory($dataList)) {
-			return false;
-		}
+	public function saveCategories($data) {
+		$this->loadModels([
+			'Category' => 'Categories.Category',
+			'CategoryOrder' => 'Categories.CategoryOrder',
+			'Block' => 'Blocks.Block',
+		]);
 
-		$editKeyList = array();
-		$editIdList = array();
-		foreach ($dataList as $index => $data) {
+		//トランザクションBegin
+		$this->setDataSource('master');
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
 
-			if (!$category = $this->findById((int)$data['Category']['id'])) {
-				$category = $this->create([
-					'block_id' => $blockId,
-					'key' => Security::hash($this->name . mt_rand() . microtime(), 'md5'),
-				]);
+		try {
+			//バリデーション
+			$indexes = array_keys($data['Categories']);
+			foreach ($indexes as $i) {
+				$data['Categories'][$i]['Category']['block_id'] = (int)$data['Block']['id'];
+				$data['Categories'][$i]['CategoryOrder']['block_key'] = $data['Block']['key'];
+
+				if (! $this->validateCategory($data['Categories'][$i], ['categoryOrder'])) {
+					return false;
+				}
 			}
 
-			// カテゴリーの更新
-			$category['Category']['name'] = $data['Category']['name'];
-			$category = $this->save($category, false);
-			if (! $category) {
-				// @codeCoverageIgnoreStart
+			//$roles = Hash::combine($roles, '{n}.Role.key', '{n}.Role');
+			$categoryKeys = Hash::combine($data['Categories'], '{n}.Category.key', '{n}.Category.key');
+
+			//削除処理
+			if (! $this->deleteAll(array($this->alias . '.key NOT IN' => $categoryKeys), false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				// @codeCoverageIgnoreEnd
 			}
-			// カテゴリー順の更新
-			$category['CategoryOrder'] = array(
-				'category_key' => $category['Category']['key'],
-				'block_key' => $blockKey,
-				'weight' => $index + 1
-			);
-			if (! $this->CategoryOrder->save($category, false)) {
-				// @codeCoverageIgnoreStart
+			if (! $this->CategoryOrder->deleteAll(
+					array($this->CategoryOrder->alias . '.category_key NOT IN' => $categoryKeys), false)
+			) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				// @codeCoverageIgnoreEnd
 			}
 
-			$editKeyList[] = $category['Category']['key'];
-			$editIdList[] = $category['Category']['id'];
+			//登録処理
+			foreach ($indexes as $i) {
+				$category = $data['Categories'][$i];
+				if (! $category = $this->save($category, false)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
+
+				$data['Categories'][$i]['CategoryOrder']['category_key'] = $category['Category']['key'];
+				if (! $this->CategoryOrder->save($data['Categories'][$i], false)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
+			}
+
+			//トランザクションCommit
+			$dataSource->commit();
+
+		} catch (Exception $ex) {
+			//トランザクションRollback
+			$dataSource->rollback();
+			CakeLog::error($ex);
+			throw $ex;
 		}
-
-		// 不要カテゴリーの削除
-		$conditions = array(
-			'Category.block_id' => $blockId,
-			'NOT' => array('Category.key' => $editKeyList),
-		);
-		$this->deleteAll($conditions);
-
-		// 不要カテゴリー順の削除
-		$conditions = array(
-			'CategoryOrder.block_key' => $blockKey,
-			'NOT' => array('CategoryOrder.category_key' => $editKeyList),
-		);
-		$this->CategoryOrder->deleteAll($conditions);
 
 		return true;
 	}
 
 /**
- * validate category
+ * Validate Category
  *
  * @param array $data received post data
- * @return mixed object announcement, false error
+ * @param array $contains Optional validate sets
+ * @return bool True on success, false on validation errors
  */
-	private function __validateCategory($data) {
-		$errors = array();
-		foreach ($data as $index => $category) {
-			$this->set($category);
-			if (! $this->validates()) {
-				$errors[$index] = $this->validationErrors;
+	public function validateCategory($data, $contains = []) {
+		$this->set($data);
+		$this->validates();
+		if ($this->validationErrors) {
+			return false;
+		}
+
+		if (in_array('categoryOrder', $contains, true)) {
+			if (! $this->CategoryOrder->validateCategoryOrder($data)) {
+				$this->validationErrors = Hash::merge($this->validationErrors, $this->CategoryOrder->validationErrors);
+				return false;
 			}
 		}
-		$this->validationErrors = $errors;
-		return $this->validationErrors ? false : true;
+		return true;
 	}
 }

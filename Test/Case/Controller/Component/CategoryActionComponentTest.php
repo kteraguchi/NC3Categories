@@ -1,6 +1,6 @@
 <?php
 /**
- * CategoriesActionComponent Test Case
+ * CategoriesComponent Test Case
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
@@ -13,7 +13,7 @@ App::uses('AppController', 'Controller');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('ComponentCollection', 'Controller');
-App::uses('CategoryActionComponent', 'Categories.Controller/Component');
+App::uses('CategoriesComponent', 'Categories.Controller/Component');
 App::uses('Frame', 'Frames.Model');
 App::uses('Block', 'Blocks.Model');
 App::uses('Category', 'Categories.Model');
@@ -25,7 +25,7 @@ App::uses('CategoryOrder', 'Categories.Model');
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\NetCommons\Test\Case\Controller
  */
-class TestCategoryActionController extends AppController {
+class TestCategoriesController extends AppController {
 
 /**
  * use model
@@ -46,7 +46,7 @@ class TestCategoryActionController extends AppController {
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\Categories\Test\Case\Controller
  */
-class CategoryActionComponentTest extends CakeTestCase {
+class CategoriesComponentTest extends CakeTestCase {
 
 /**
  * Fixtures
@@ -70,9 +70,9 @@ class CategoryActionComponentTest extends CakeTestCase {
 /**
  * CategoryAction component
  *
- * @var Component CategoriesAction component
+ * @var Component Categories component
  */
-	public $CategoriesAction = null;
+	public $Categories = null;
 
 /**
  * Controller for CategoryAction component test
@@ -93,11 +93,11 @@ class CategoryActionComponentTest extends CakeTestCase {
 		//テストコントローラ読み込み
 		$CakeRequest = new CakeRequest();
 		$CakeResponse = new CakeResponse();
-		$this->CategoryController = new TestCategoryActionController($CakeRequest, $CakeResponse);
+		$this->CategoryController = new TestCategoriesController($CakeRequest, $CakeResponse);
 		//コンポーネント読み込み
 		$Collection = new ComponentCollection();
-		$this->CategoriesAction = new CategoryActionComponent($Collection);
-		$this->CategoriesAction->viewSetting = false;
+		$this->Categories = new CategoriesComponent($Collection);
+		$this->Categories->viewSetting = false;
 	}
 
 /**
@@ -108,7 +108,7 @@ class CategoryActionComponentTest extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		unset($this->CategoriesAction);
+		unset($this->Categories);
 		unset($this->CategoryController);
 
 		Configure::write('Config.language', null);
@@ -120,7 +120,7 @@ class CategoryActionComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testInitialize() {
-		$this->CategoriesAction->initialize($this->CategoryController);
+		$this->Categories->initialize($this->CategoryController);
 		$expected = array();
 		$this->assertEquals($expected, $this->CategoryController->viewVars);
 	}

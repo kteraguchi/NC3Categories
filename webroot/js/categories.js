@@ -1,39 +1,70 @@
 /**
+ * @fileoverview Categories Javascript
+ * @author nakajimashouhei@gmail.com (Shohei Nakajima)
+ */
+
+
+/**
  * Categories Javascript
  *
  * @param {string} Controller name
- * @param {function(scope, http, modalStack)} Controller
+ * @param {function($scope)} Controller
  */
-NetCommonsApp.controller('Categories',
-    function($scope) {
+NetCommonsApp.controller('Categories', function($scope) {
 
-      $scope.categoryList = {};
-      $scope.validationErrors = {};
+  /**
+   * categories
+   *
+   * @type {object}
+   */
+  $scope.categories = [];
 
-      $scope.init = function(categoryList, validationErrors) {
-        $scope.categoryList = categoryList;
-        $scope.validationErrors = validationErrors;
-      };
+  /**
+   * initialize
+   *
+   * @return {void}
+   */
+  $scope.initialize = function(data) {
+    $scope.categories = data.categories;
+  };
 
-      $scope.addCategory = function() {
-        var addCategory = {Category: {id: '', name: ''}};
-        $scope.categoryList.push(addCategory);
-      };
+  /**
+   * add
+   *
+   * @return {void}
+   */
+  $scope.add = function() {
+    var category = {
+      Category: {id: null, name: ''},
+      CategoryOrder: {id: null, categoryKey: null}
+    };
+    $scope.categories.push(category);
+  };
 
-      $scope.deleteCategory = function(index) {
-        $scope.categoryList.splice(index, 1);
-      };
+  /**
+   * delete
+   *
+   * @return {void}
+   */
+  $scope.delete = function(index) {
+    $scope.categories.splice(index, 1);
+  };
 
-      $scope.sortCategory = function(moveType, index) {
-        var destIndex = (moveType === 'up') ? index - 1 : index + 1;
-        if (angular.isUndefined($scope.categoryList[destIndex])) {
-          return false;
-        }
+  /**
+   * move
+   *
+   * @return {void}
+   */
+  $scope.move = function(type, index) {
+    var dest = (type === 'up') ? index - 1 : index + 1;
+    if (angular.isUndefined($scope.categories[dest])) {
+      return false;
+    }
 
-        var destCategory = angular.copy($scope.categoryList[destIndex]);
-        var targetCategory = angular.copy($scope.categoryList[index]);
-        $scope.categoryList[index] = destCategory;
-        $scope.categoryList[destIndex] = targetCategory;
-      };
+    var destCategory = angular.copy($scope.categories[dest]);
+    var targetCategory = angular.copy($scope.categories[index]);
+    $scope.categories[index] = destCategory;
+    $scope.categories[dest] = targetCategory;
+  };
 
-    });
+});

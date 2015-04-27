@@ -96,6 +96,5 @@ class CategoriesModelTestCase extends YACakeTestCase {
  * @return void
  */
 	public function testIndex() {
-		$this->assertTrue(true);
 	}
 }
