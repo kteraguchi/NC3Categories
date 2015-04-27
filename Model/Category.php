@@ -56,7 +56,7 @@ class Category extends CategoriesAppModel {
 			'foreignKey' => false,
 			'conditions' => 'CategoryOrder.category_key=Category.key',
 			'fields' => '',
-			'order' => array('weight' => 'ASC')
+			'order' => array('CategoryOrder.weight' => 'ASC')
 		),
 	);
 
