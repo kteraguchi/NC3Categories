@@ -38,6 +38,7 @@ class TestCategoriesController extends AppController {
 		'Categories.Category',
 		'Categories.CategoryOrder',
 	);
+
 /**
  * use components
  *
@@ -47,17 +48,17 @@ class TestCategoriesController extends AppController {
 		'NetCommons.NetCommonsFrame',
 	);
 
-
 /**
  * Redirects to given $url, after turning off $this->autoRender.
  * Script execution is halted after the redirect.
  *
  * @param string|array $url A string or array-based URL pointing to another location within the app,
  *     or an absolute URL
- * @param integer $status Optional HTTP status code (eg: 404)
+ * @param int $status Optional HTTP status code (eg: 404)
  * @param bool $exit If true, exit() will be called after the redirect
  * @return void
  * @link http://book.cakephp.org/2.0/en/controllers.html#Controller::redirect
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function redirect($url, $status = null, $exit = true) {
 		$this->autoRender = false;
@@ -148,7 +149,9 @@ class CategoriesComponentTest extends CakeTestCase {
  *
  * @param string $url Trimmed URL string to use. Should not contain the application base path.
  * @param bool $parseEnvironment Set to false to not auto parse the environment. ie. GET, POST and FILES.
+ * @param array $params Set CakeRequest->params
  * @return void
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	protected function _initCategoriesComponent($url = null, $parseEnvironment = true, $params = []) {
 		//テストコントローラ読み込み

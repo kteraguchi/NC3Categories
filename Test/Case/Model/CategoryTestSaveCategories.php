@@ -686,6 +686,33 @@ class CategoryTestSaveCategories extends CategoryTest {
 	}
 
 /**
+ * Expect to all delete by undefined `Categories`
+ *
+ * @return void
+ */
+	public function testAllDeleteByUndefinedCategories() {
+		//データ生成
+		$data = $this->__defaultData;
+		$data = Hash::remove($data, 'Categories');
+
+		//処理実行
+		$result = $this->Category->saveCategories($data);
+		$this->assertTrue($result);
+
+		$result = $this->Category->getCategories('1', '1');
+		$result = Hash::remove($result, '{n}.Block');
+
+		//取得したデータ数のチェック
+		$this->assertCount(0, $result);
+
+		//期待値の生成
+		$expected = array();
+
+		//テスト実施
+		$this->_assertArray($expected, $result);
+	}
+
+/**
  * Expect one category by delete
  *
  * @return void
