@@ -49,9 +49,7 @@ class CategoriesComponent extends Component {
 		);
 
 		//Categoriesの取得
-		if (! $this->initCategories()) {
-			return;
-		}
+		$this->initCategories();
 
 		//POST処理
 		if ($this->controller->request->isPost()) {
@@ -81,16 +79,13 @@ class CategoriesComponent extends Component {
 /**
  * initCategories
  *
- * @return bool True on success, False on failure
+ * @return void
  */
 	public function initCategories() {
-		if (! $categories = $this->controller->Category->getCategories(
+		$categories = $this->controller->Category->getCategories(
 			$this->controller->viewVars['blockId'],
 			$this->controller->viewVars['roomId']
-		)) {
-			$this->controller->throwBadRequest();
-			return false;
-		}
+		);
 
 		$categories = Hash::remove($categories, '{n}.Block');
 		$categories = Hash::remove($categories, '{n}.TrackableCreator');
@@ -98,8 +93,6 @@ class CategoriesComponent extends Component {
 
 		$categories = $this->controller->camelizeKeyRecursive($categories);
 		$this->controller->set(['categories' => $categories]);
-
-		return true;
 	}
 
 }

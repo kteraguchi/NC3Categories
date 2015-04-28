@@ -141,7 +141,6 @@ class Category extends CategoriesAppModel {
 		$this->loadModels([
 			'Category' => 'Categories.Category',
 			'CategoryOrder' => 'Categories.CategoryOrder',
-			'Block' => 'Blocks.Block',
 		]);
 
 		//トランザクションBegin
@@ -161,16 +160,26 @@ class Category extends CategoriesAppModel {
 				}
 			}
 
-			//$roles = Hash::combine($roles, '{n}.Role.key', '{n}.Role');
 			$categoryKeys = Hash::combine($data['Categories'], '{n}.Category.key', '{n}.Category.key');
 
 			//削除処理
-			if (! $this->deleteAll(array($this->alias . '.key NOT IN' => $categoryKeys), false)) {
+			$conditions = array(
+				'block_id' => $data['Block']['id']
+			);
+			if ($categoryKeys) {
+				$conditions[$this->alias . '.key NOT'] = $categoryKeys;
+			}
+			if (! $this->deleteAll($conditions, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-			if (! $this->CategoryOrder->deleteAll(
-					array($this->CategoryOrder->alias . '.category_key NOT IN' => $categoryKeys), false)
-			) {
+
+			$conditions = array(
+				'block_key' => $data['Block']['key']
+			);
+			if ($categoryKeys) {
+				$conditions[$this->CategoryOrder->alias . '.category_key NOT'] = $categoryKeys;
+			}
+			if (! $this->CategoryOrder->deleteAll($conditions, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 

@@ -60,6 +60,16 @@ class CategoryOrderFixture extends CakeTestFixture {
 			'modified_user' => 1,
 			'modified' => '2015-01-28 04:57:05'
 		),
+		array(
+			'id' => 3,
+			'category_key' => 'category_3',
+			'block_key' => 'block_1',
+			'weight' => 3,
+			'created_user' => 1,
+			'created' => '2015-01-28 04:57:05',
+			'modified_user' => 1,
+			'modified' => '2015-01-28 04:57:05'
+		),
 	);
 
 }
