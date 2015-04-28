@@ -93,6 +93,8 @@ class CategoriesComponentTest extends CakeTestCase {
 		'plugin.rooms.roles_rooms_user',
 		'plugin.rooms.roles_room',
 		'plugin.rooms.room_role_permission',
+		'plugin.users.user_attributes_user',
+		'plugin.users.user',
 	);
 
 /**
