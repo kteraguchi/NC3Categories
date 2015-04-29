@@ -70,6 +70,19 @@ class CategoryFixture extends CakeTestFixture {
 			'modified_user' => '1',
 			'modified' => '2015-01-28 04:56:56'
 		),
+
+		//Faqs plugin
+		array(
+			'id' => '100',
+			'block_id' => '100',
+			'key' => 'category_100',
+			'name' => 'category name 100',
+			'created_user' => '1',
+			'created' => '2015-01-28 04:56:56',
+			'modified_user' => '1',
+			'modified' => '2015-01-28 04:56:56'
+		),
+
 	);
 
 }
