@@ -43,11 +43,6 @@ class CategoriesComponent extends Component {
  * @return void
  */
 	public function edit() {
-		//blockId取得
-		$this->controller->set('blockId',
-			isset($this->controller->params['pass'][1]) ? (int)$this->controller->params['pass'][1] : null
-		);
-
 		//Categoriesの取得
 		$this->initCategories();
 

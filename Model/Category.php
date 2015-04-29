@@ -259,4 +259,41 @@ class Category extends CategoriesAppModel {
 		}
 		return true;
 	}
+
+/**
+ * Delete categories by blocks.key.
+ * Please do the transaction and validation in the caller.
+ *
+ * @param string $blockKey blocks.key
+ * @return void
+ *
+ * @throws InternalErrorException
+ */
+	public function deleteByBlockKey($blockKey) {
+		$this->loadModels([
+			'Category' => 'Categories.Category',
+			'CategoryOrder' => 'Categories.CategoryOrder',
+			'Block' => 'Blocks.Block',
+		]);
+
+		$blocks = $this->Block->find('list', array(
+				'recursive' => -1,
+				'conditions' => array(
+					$this->Block->alias . '.key' => $blockKey
+				),
+			)
+		);
+		$blocks = array_keys($blocks);
+
+		//Categoryデータ削除
+		if (! $this->deleteAll(array($this->alias . '.block_id' => $blocks), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		//CategoryOrderデータ削除
+		if (! $this->CategoryOrder->deleteAll(array($this->CategoryOrder->alias . '.block_key' => $blockKey), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+	}
+
 }

@@ -30,9 +30,10 @@ class CategoriesComponentTestEdit extends CategoriesComponentTest {
 			'plugin' => 'test',
 			'pass' => array('1', '1')
 		);
-		$this->_initCategoriesComponent('/tests/tests/index/1/1', 'GET', $params);
+		$this->_initCategoriesComponent($params);
 		$this->Categories->initialize($this->CategoryController);
 		$this->Categories->controller->viewVars['roomId'] = '1';
+		$this->Categories->controller->viewVars['blockId'] = '1';
 
 		//edit()実行
 		$this->Categories->edit();
@@ -73,7 +74,7 @@ class CategoriesComponentTestEdit extends CategoriesComponentTest {
 			)
 		);
 
-		$this->_initCategoriesComponent('/tests/tests/index/1/1', 'POST', $params);
+		$this->_initCategoriesComponent($params);
 		$this->Categories->initialize($this->CategoryController);
 		$this->Categories->controller->viewVars['frameId'] = '1';
 		$this->Categories->controller->viewVars['blockId'] = '1';
@@ -118,7 +119,7 @@ class CategoriesComponentTestEdit extends CategoriesComponentTest {
 			)
 		);
 
-		$this->_initCategoriesComponent('/tests/tests/index/1/1', 'POST', $params);
+		$this->_initCategoriesComponent($params);
 		$this->Categories->initialize($this->CategoryController);
 		$this->Categories->controller->viewVars['frameId'] = '1';
 		$this->Categories->controller->viewVars['blockId'] = '1';

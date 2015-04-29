@@ -13,6 +13,12 @@ App::uses('AppController', 'Controller');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('ComponentCollection', 'Controller');
+App::uses('NetCommonsBlockComponent', 'NetCommons.Controller/Component');
+App::uses('NetCommonsRoomRoleComponent', 'NetCommons.Controller/Component');
+App::uses('YACakeTestCase', 'NetCommons.TestSuite');
+App::uses('RolesControllerTest', 'Roles.Test/Case/Controller');
+App::uses('AuthComponent', 'Component');
+
 App::uses('CategoriesComponent', 'Categories.Controller/Component');
 App::uses('Frame', 'Frames.Model');
 App::uses('Block', 'Blocks.Model');
@@ -72,7 +78,7 @@ class TestCategoriesController extends AppController {
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\Categories\Test\Case\Controller
  */
-class CategoriesComponentTest extends CakeTestCase {
+class CategoriesComponentTest extends YACakeTestCase {
 
 /**
  * Fixtures
@@ -155,9 +161,9 @@ class CategoriesComponentTest extends CakeTestCase {
  * @return void
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	protected function _initCategoriesComponent($url = null, $parseEnvironment = true, $params = []) {
+	protected function _initCategoriesComponent($params = []) {
 		//テストコントローラ読み込み
-		$CakeRequest = new CakeRequest($url, $parseEnvironment);
+		$CakeRequest = new CakeRequest();
 		$CakeRequest->params = Hash::merge($CakeRequest->params, $params);
 
 		$CakeResponse = new CakeResponse();
