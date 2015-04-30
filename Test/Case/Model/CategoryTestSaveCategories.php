@@ -208,7 +208,7 @@ class CategoryTestSaveCategories extends CategoryTest {
 		$this->assertCount(4, $result);
 
 		$index = 0;
-		$addCategoryId = '4';
+		$addCategoryId = $this->Category->getLastInsertID();
 		$this->assertNotEmpty($result[$index]['Category']['id'], 'Category.id');
 		$result[$index]['Category']['id'] = $addCategoryId;
 
@@ -231,7 +231,6 @@ class CategoryTestSaveCategories extends CategoryTest {
 					'id' => $addCategoryId,
 					'block_id' => '1',
 					'key' => 'category_' . $addCategoryId,
-					'name' => 'category_name_' . $addCategoryId,
 				),
 				'CategoryOrder' => array(
 					'id' => $addCategoryId,
@@ -305,7 +304,7 @@ class CategoryTestSaveCategories extends CategoryTest {
 		$this->assertCount(4, $result);
 
 		$index = 3;
-		$addCategoryId = '4';
+		$addCategoryId = $this->Category->getLastInsertID();
 		$this->assertNotEmpty($result[$index]['Category']['id'], 'Category.id');
 		$result[$index]['Category']['id'] = $addCategoryId;
 
@@ -328,7 +327,6 @@ class CategoryTestSaveCategories extends CategoryTest {
 					'id' => $addCategoryId,
 					'block_id' => '1',
 					'key' => 'category_' . $addCategoryId,
-					'name' => 'category_name_' . $addCategoryId,
 				),
 				'CategoryOrder' => array(
 					'id' => $addCategoryId,
@@ -402,7 +400,7 @@ class CategoryTestSaveCategories extends CategoryTest {
 		$this->assertCount(4, $result);
 
 		$index = 1;
-		$addCategoryId = '4';
+		$addCategoryId = $this->Category->getLastInsertID();
 		$this->assertNotEmpty($result[$index]['Category']['id'], 'Category.id');
 		$result[$index]['Category']['id'] = $addCategoryId;
 
@@ -425,7 +423,6 @@ class CategoryTestSaveCategories extends CategoryTest {
 					'id' => $addCategoryId,
 					'block_id' => '1',
 					'key' => 'category_' . $addCategoryId,
-					'name' => 'category_name_' . $addCategoryId,
 				),
 				'CategoryOrder' => array(
 					'id' => $addCategoryId,
@@ -618,7 +615,7 @@ class CategoryTestSaveCategories extends CategoryTest {
 		$this->assertCount(3, $result);
 
 		$index = 1;
-		$addCategoryId = '4';
+		$addCategoryId = $this->Category->getLastInsertID();
 		$this->assertNotEmpty($result[$index]['Category']['id'], 'Category.id');
 		$result[$index]['Category']['id'] = $addCategoryId;
 
@@ -641,7 +638,6 @@ class CategoryTestSaveCategories extends CategoryTest {
 					'id' => $addCategoryId,
 					'block_id' => '1',
 					'key' => 'category_' . $addCategoryId,
-					'name' => 'category_name_' . $addCategoryId,
 				),
 				'CategoryOrder' => array(
 					'id' => $addCategoryId,
