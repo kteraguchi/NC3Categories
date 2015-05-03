@@ -45,6 +45,20 @@ class CategoriesComponentTestInitCategories extends CategoriesComponentTest {
 	}
 
 /**
+ * Expect to CategoriesComponent->initCategories() by true on hasEmpty
+ *
+ * @return void
+ */
+	public function testHasEmpty() {
+		$this->Categories->controller->viewVars['blockId'] = '1';
+		$this->Categories->controller->viewVars['roomId'] = '1';
+
+		$this->Categories->initCategories(true);
+
+		$this->assertCount(4, $this->Categories->controller->viewVars['categories']);
+	}
+
+/**
  * Expect to CategoriesComponent->initCategories() by another roomId
  *
  * @return void

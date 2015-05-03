@@ -23,7 +23,6 @@
 			<?php echo __d('categories', 'Category'); ?>
 		</div>
 
-
 		<div class="panel-body">
 			<div class="form-group text-right">
 				<button type="button" class="btn btn-success" ng-click="add()">

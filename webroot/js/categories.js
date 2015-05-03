@@ -25,7 +25,9 @@ NetCommonsApp.controller('Categories', function($scope) {
    * @return {void}
    */
   $scope.initialize = function(data) {
-    $scope.categories = data.categories;
+    angular.forEach(data.categories, function(value) {
+      $scope.categories.push(value);
+    });
   };
 
   /**
