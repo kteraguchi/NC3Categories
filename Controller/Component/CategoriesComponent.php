@@ -75,10 +75,11 @@ class CategoriesComponent extends Component {
  * initCategories
  *
  * @param bool $hasEmpty True on has empty
+ * @param string $key keyPath on Hash::combine
  * @return void
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	public function initCategories($hasEmpty = false) {
+	public function initCategories($hasEmpty = false, $key = '{n}.CategoryOrder.weight') {
 		$categories = $this->controller->Category->getCategories(
 			$this->controller->viewVars['blockId'],
 			$this->controller->viewVars['roomId']
@@ -100,7 +101,7 @@ class CategoriesComponent extends Component {
 		$categories = Hash::remove($categories, '{n}.TrackableCreator');
 		$categories = Hash::remove($categories, '{n}.TrackableUpdater');
 		$categories = Hash::sort($categories, '{n}.CategoryOrder.weight', 'asc');
-		$categories = Hash::combine($categories, '{n}.Category.id', '{n}');
+		$categories = Hash::combine($categories, $key, '{n}');
 
 		$categories = $this->controller->camelizeKeyRecursive($categories);
 		$this->controller->set(['categories' => $categories]);
