@@ -739,39 +739,6 @@ class CategoryTestSaveCategories extends CategoryTest {
 	}
 
 /**
- * Expect to save the categories
- *
- * @return void
- */
-	public function testValidateError() {
-		//データ生成
-		$data = Hash::merge($this->__defaultData, array(
-			'Categories' => array(
-				0 => array(
-					'Category' => array(
-						'name' => '',
-					),
-				),
-			)
-		));
-
-		//処理実行
-		$result = $this->Category->saveCategories($data);
-		$this->assertFalse($result);
-
-		$result = $this->Category->getCategories('1', '1');
-		$result = Hash::remove($result, '{n}.Block');
-
-		//期待値の生成
-		$expected = $this->__defaultData['Categories'];
-		$expected = Hash::insert($expected, '{n}.Category.block_id', '1');
-		$expected = Hash::insert($expected, '{n}.CategoryOrder.block_key', 'block_1');
-
-		//テスト実施
-		$this->_assertArray($expected, $result);
-	}
-
-/**
  * Expect to fail on Category->save()
  * e.g.) connection error
  *

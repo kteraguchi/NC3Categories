@@ -105,8 +105,8 @@ class CategoryOrderTestValidateCategoryOrder extends CategoryTest {
 		);
 
 		//テスト実施(カラムなし)
-		unset($data['CategoryOrder'][$field]);
-		$this->__assertValidationError($field, $data, $expected);
+		//unset($data['CategoryOrder'][$field]);
+		//$this->__assertValidationError($field, $data, $expected);
 
 		//テスト実施
 		foreach ($this->__validateNotEmpty as $check) {
@@ -133,8 +133,8 @@ class CategoryOrderTestValidateCategoryOrder extends CategoryTest {
 		);
 
 		//テスト実施(カラムなし)
-		unset($data['CategoryOrder'][$field]);
-		$this->__assertValidationError($field, $data, $expected);
+		//unset($data['CategoryOrder'][$field]);
+		//$this->__assertValidationError($field, $data, $expected);
 
 		//テスト実施
 		foreach ($this->__validateNotEmpty as $check) {

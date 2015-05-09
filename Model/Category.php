@@ -84,6 +84,7 @@ class Category extends CategoriesAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
 					'required' => true,
+					'on' => 'update', // Limit validation to 'create' or 'update' operations
 				),
 			),
 			'key' => array(
@@ -132,6 +133,7 @@ class Category extends CategoriesAppModel {
 
 /**
  * Save categories
+ * Please do the transaction and validation in the caller.
  *
  * @param array $data received post data
  * @return bool True on success, false on validation errors
@@ -139,56 +141,48 @@ class Category extends CategoriesAppModel {
  */
 	public function saveCategories($data) {
 		$this->loadModels([
-			'Category' => 'Categories.Category',
 			'CategoryOrder' => 'Categories.CategoryOrder',
 		]);
 
-		//トランザクションBegin
-		$this->setDataSource('master');
-		$dataSource = $this->getDataSource();
-		$dataSource->begin();
+		if (! isset($data['Categories'])) {
+			$data['Categories'] = [];
+		}
 
-		try {
-			//バリデーション
-			if (! isset($data['Categories'])) {
-				$data['Categories'] = [];
-			}
-			if (! $data = $this->__validateCategory($data)) {
-				return false;
-			}
+		$categoryKeys = Hash::combine($data['Categories'], '{n}.Category.key', '{n}.Category.key');
 
-			$categoryKeys = Hash::combine($data['Categories'], '{n}.Category.key', '{n}.Category.key');
+		//削除処理
+		$conditionsCategory = array(
+			'block_id' => $data['Block']['id']
+		);
+		$conditionsCateOrder = array(
+			'block_key' => $data['Block']['key']
+		);
+		if ($categoryKeys) {
+			$conditionsCategory[$this->alias . '.key NOT'] = $categoryKeys;
+			$conditionsCateOrder[$this->CategoryOrder->alias . '.category_key NOT'] = $categoryKeys;
+		}
 
-			//削除処理
-			$conditionsCategory = array(
-				'block_id' => $data['Block']['id']
-			);
-			$conditionsCateOrder = array(
-				'block_key' => $data['Block']['key']
-			);
-			if ($categoryKeys) {
-				$conditionsCategory[$this->alias . '.key NOT'] = $categoryKeys;
-				$conditionsCateOrder[$this->CategoryOrder->alias . '.category_key NOT'] = $categoryKeys;
-			}
+		if (! $this->deleteAll($conditionsCategory, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		if (! $this->CategoryOrder->deleteAll($conditionsCateOrder, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
 
-			if (! $this->deleteAll($conditionsCategory, false)) {
+		//登録処理
+				$indexes = array_keys($data['Categories']);
+		foreach ($indexes as $i) {
+			$category = $data['Categories'][$i];
+			$category['Category']['block_id'] = (int)$data['Block']['id'];
+			if (! $category = $this->save($category, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-			if (! $this->CategoryOrder->deleteAll($conditionsCateOrder, false)) {
+
+			$data['Categories'][$i]['CategoryOrder']['block_key'] = $data['Block']['key'];
+			$data['Categories'][$i]['CategoryOrder']['category_key'] = $category['Category']['key'];
+			if (! $this->CategoryOrder->save($data['Categories'][$i], false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-
-			//登録処理
-			$this->__saveCategory($data);
-
-			//トランザクションCommit
-			$dataSource->commit();
-
-		} catch (Exception $ex) {
-			//トランザクションRollback
-			$dataSource->rollback();
-			CakeLog::error($ex);
-			throw $ex;
 		}
 
 		return true;
@@ -218,16 +212,18 @@ class Category extends CategoriesAppModel {
 	}
 
 /**
- * Validate Category
+ * Validate Categories
  *
  * @param array $data received post data
  * @return mixed Array on success, false on validation errors
  */
-	private function __validateCategory($data) {
+	public function validateCategories($data) {
 		$indexes = array_keys($data['Categories']);
 		foreach ($indexes as $i) {
-			$data['Categories'][$i]['Category']['block_id'] = (int)$data['Block']['id'];
-			$data['Categories'][$i]['CategoryOrder']['block_key'] = $data['Block']['key'];
+			if (isset($data['Block']['id'])) {
+				$data['Categories'][$i]['Category']['block_id'] = (int)$data['Block']['id'];
+				$data['Categories'][$i]['CategoryOrder']['block_key'] = $data['Block']['key'];
+			}
 
 			if (! $this->validateCategory($data['Categories'][$i], ['categoryOrder'])) {
 				return false;
@@ -235,29 +231,6 @@ class Category extends CategoriesAppModel {
 		}
 
 		return $data;
-	}
-
-/**
- * Save Category
- *
- * @param array $data received post data
- * @return bool True on success, exception on validation errors
- * @throws InternalErrorException
- */
-	private function __saveCategory($data) {
-		$indexes = array_keys($data['Categories']);
-		foreach ($indexes as $i) {
-			$category = $data['Categories'][$i];
-			if (! $category = $this->save($category, false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-
-			$data['Categories'][$i]['CategoryOrder']['category_key'] = $category['Category']['key'];
-			if (! $this->CategoryOrder->save($data['Categories'][$i], false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-		}
-		return true;
 	}
 
 /**

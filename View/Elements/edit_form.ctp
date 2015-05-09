@@ -15,37 +15,27 @@
 
 <?php echo $this->Html->script('/categories/js/categories.js', false); ?>
 
-<?php echo $this->Form->create('Category', array('novalidate' => true)); ?>
-	<?php $this->Form->unlockField('Categories'); ?>
+<?php $this->Form->unlockField('Categories'); ?>
 
-	<div class="panel panel-default" ng-controller="Categories" ng-init="initialize(<?php echo h(json_encode(['categories' => $categories])); ?>)">
-		<div class="panel-heading">
-			<?php echo __d('categories', 'Category'); ?>
+<div class="panel panel-default" ng-controller="Categories" ng-init="initialize(<?php echo h(json_encode(['categories' => $categories])); ?>)">
+	<div class="panel-heading">
+		<?php echo __d('categories', 'Category'); ?>
+	</div>
+
+	<div class="panel-body">
+		<div class="form-group text-right">
+			<button type="button" class="btn btn-success btn-sm" ng-click="add()">
+				<span class="glyphicon glyphicon-plus"> </span>
+			</button>
 		</div>
 
-		<div class="panel-body">
-			<div class="form-group text-right">
-				<button type="button" class="btn btn-success" ng-click="add()">
-					<span class="glyphicon glyphicon-plus"> </span>
-				</button>
-			</div>
+		<div ng-hide="categories.length">
+			<p><?php echo __d('categories', 'No category.'); ?></p>
+		</div>
 
-			<?php echo $this->Form->hidden('Block.id', array(
-					'value' => $blockId,
-				)); ?>
-
-			<?php echo $this->Form->hidden('Block.key', array(
-					'value' => $blockKey,
-				)); ?>
-
-
-			<div ng-hide="categories.length">
-				<p><?php echo __d('categories', 'No category.'); ?></p>
-			</div>
-
-			<div class="form-group" ng-repeat="c in categories track by $index">
-
-				<div class="input-group">
+		<div class="pre-scrollable" ng-show="categories.length">
+			<article class="form-group" ng-repeat="c in categories track by $index">
+				<div class="input-group input-group-sm">
 					<div class="input-group-btn">
 						<button type="button" class="btn btn-default"
 								ng-click="move('up', $index)" ng-disabled="$first">
@@ -63,7 +53,7 @@
 					<input type="hidden" name="data[Categories][{{$index}}][CategoryOrder][id]" ng-value="c.categoryOrder.id">
 					<input type="hidden" name="data[Categories][{{$index}}][CategoryOrder][category_key]" ng-value="c.categoryOrder.categoryKey">
 					<input type="hidden" name="data[Categories][{{$index}}][CategoryOrder][weight]" ng-value="{{$index + 1}}">
-					<input type="text" name="data[Categories][{{$index}}][Category][name]" ng-model="c.category.name" class="form-control" required>
+					<input type="text" name="data[Categories][{{$index}}][Category][name]" ng-model="c.category.name" class="form-control" required autofocus>
 
 					<div class="input-group-btn">
 						<button type="button" class="btn btn-default" tooltip="<?php echo __d('net_commons', 'Delete'); ?>"
@@ -72,21 +62,8 @@
 						</button>
 					</div>
 				</div>
-			</div>
-		</div>
-
-		<div class="panel-footer text-center">
-			<button type="button" class="btn btn-default btn-workflow" onclick="location.href = '<?php echo $cancelUrl; ?>'">
-				<span class="glyphicon glyphicon-remove"></span>
-				<?php echo __d('net_commons', 'Cancel'); ?>
-			</button>
-
-			<?php echo $this->Form->button(__d('net_commons', 'OK'), array(
-					'class' => 'btn btn-primary btn-workflow',
-					'name' => 'save',
-				)); ?>
+			</article>
 		</div>
 	</div>
-
-<?php echo $this->Form->end();
+</div>
 

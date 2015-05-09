@@ -84,35 +84,6 @@ class CategoryTestValidateCategory extends CategoryTest {
 	}
 
 /**
- * Expect Category `block_id` validation error by notEmpty error on create
- *
- * @return void
- */
-	public function testBlockIdErrorByNotEmptyOnCreate() {
-		$field = 'block_id';
-		$message = __d('net_commons', 'Invalid request.');
-
-		//データ生成
-		$data = $this->__defaultData;
-		unset($data['Category']['id'], $data['CategoryOrder']['id']);
-
-		//期待値
-		$expected = array(
-			$field => array($message)
-		);
-
-		//テスト実施(カラムなし)
-		unset($data['Category'][$field]);
-		$this->__assertValidationError($field, $data, $expected);
-
-		//テスト実施
-		foreach ($this->__validateNotEmpty as $check) {
-			$data['Category'][$field] = $check;
-			$this->__assertValidationError($field, $data, $expected);
-		}
-	}
-
-/**
  * Expect Category `block_id` error by notEmpty error on update
  *
  * @return void

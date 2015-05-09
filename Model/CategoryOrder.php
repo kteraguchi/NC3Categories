@@ -42,7 +42,7 @@ class CategoryOrder extends CategoriesAppModel {
 					'rule' => array('notEmpty'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'allowEmpty' => false,
-					'required' => true,
+					//'required' => true,
 				),
 			),
 			'category_key' => array(
