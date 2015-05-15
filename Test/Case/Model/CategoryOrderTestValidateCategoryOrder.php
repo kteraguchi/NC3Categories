@@ -87,35 +87,6 @@ class CategoryOrderTestValidateCategoryOrder extends CategoryTest {
 	}
 
 /**
- * Expect CategoryOrder `block_key` error by notEmpty error on create
- *
- * @return void
- */
-	public function testBlockKeyErrorByNotEmptyOnCreate() {
-		$field = 'block_key';
-		$message = __d('net_commons', 'Invalid request.');
-
-		//データ生成
-		$data = $this->__defaultData;
-		unset($data['CategoryOrder']['id']);
-
-		//期待値
-		$expected = array(
-			$field => array($message)
-		);
-
-		//テスト実施(カラムなし)
-		//unset($data['CategoryOrder'][$field]);
-		//$this->__assertValidationError($field, $data, $expected);
-
-		//テスト実施
-		foreach ($this->__validateNotEmpty as $check) {
-			$data['CategoryOrder'][$field] = $check;
-			$this->__assertValidationError($field, $data, $expected);
-		}
-	}
-
-/**
  * Expect CategoryOrder `block_key` error by notEmpty error on update
  *
  * @return void
