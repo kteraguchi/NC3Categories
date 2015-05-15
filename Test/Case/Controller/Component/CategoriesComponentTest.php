@@ -155,8 +155,6 @@ class CategoriesComponentTest extends YACakeTestCase {
 /**
  * Initialize of CategoriesComponent
  *
- * @param string $url Trimmed URL string to use. Should not contain the application base path.
- * @param bool $parseEnvironment Set to false to not auto parse the environment. ie. GET, POST and FILES.
  * @param array $params Set CakeRequest->params
  * @return void
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
