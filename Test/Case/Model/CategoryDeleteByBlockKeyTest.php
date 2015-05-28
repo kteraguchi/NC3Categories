@@ -11,7 +11,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('CategoryTest', 'Categories.Test/Case/Model');
+App::uses('CategoryTestBase', 'Categories.Test/Case/Model');
 
 /**
  * Test of Category->deleteByBlockKey()
@@ -20,7 +20,7 @@ App::uses('CategoryTest', 'Categories.Test/Case/Model');
  * @package NetCommons\Categories\Test\Case\Model
  * @SuppressWarnings(PHPMD.TooManyMethods)
  */
-class CategoryTestDeleteByBlockKey extends CategoryTest {
+class CategoryDeleteByBlockKeyTest extends CategoryTestBase {
 
 /**
  * Expect to save the categories

@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('CategoriesComponentTest', 'Categories.Test/Case/Controller/Component');
+App::uses('CategoriesComponentTestBase', 'Categories.Test/Case/Controller/Component');
 
 /**
  * Test of CategoriesComponent->initCategories()
@@ -17,7 +17,7 @@ App::uses('CategoriesComponentTest', 'Categories.Test/Case/Controller/Component'
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\Categories\Test\Case\Controller
  */
-class CategoriesComponentTestInitCategories extends CategoriesComponentTest {
+class CategoriesComponentInitCategoriesTest extends CategoriesComponentTestBase {
 
 /**
  * setUp

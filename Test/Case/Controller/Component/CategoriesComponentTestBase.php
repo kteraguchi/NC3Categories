@@ -78,7 +78,7 @@ class TestCategoriesController extends AppController {
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\Categories\Test\Case\Controller
  */
-class CategoriesComponentTest extends YACakeTestCase {
+class CategoriesComponentTestBase extends YACakeTestCase {
 
 /**
  * Fixtures

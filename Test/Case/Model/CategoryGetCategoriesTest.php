@@ -11,7 +11,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('CategoryTest', 'Categories.Test/Case/Model');
+App::uses('CategoryTestBase', 'Categories.Test/Case/Model');
 
 /**
  * Test of Category->getCategories()
@@ -19,7 +19,7 @@ App::uses('CategoryTest', 'Categories.Test/Case/Model');
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\Categories\Test\Case\Model
  */
-class CategoryTestGetCategories extends CategoryTest {
+class CategoryGetCategoriesTest extends CategoryTestBase {
 
 /**
  * Expect to get the categories

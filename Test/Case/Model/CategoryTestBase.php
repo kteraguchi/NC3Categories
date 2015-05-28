@@ -23,7 +23,7 @@ App::uses('CategoryOrder', 'Categories.Model');
  * @author Ryo Ozawa <ozawa.ryo@withone.co.jp>
  * @package NetCommons\Categories\Test\Case\Model
  */
-class CategoryTest extends YACakeTestCase {
+class CategoryTestBase extends YACakeTestCase {
 
 /**
  * Fixtures
@@ -90,13 +90,5 @@ class CategoryTest extends YACakeTestCase {
 		$result = Hash::remove($result, '{n}.TrackableUpdater');
 
 		$this->assertEquals($expected, $result);
-	}
-
-/**
- * Called before the test().
- *
- * @return void
- */
-	public function test() {
 	}
 }

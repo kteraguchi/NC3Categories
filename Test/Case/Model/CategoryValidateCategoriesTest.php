@@ -11,12 +11,12 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('CategoryTest', 'Categories.Test/Case/Model');
+App::uses('CategoryTestBase', 'Categories.Test/Case/Model');
 
 /**
  * Category Model Test Case
  */
-class CategoryTestValidateCategories extends CategoryTest {
+class CategoryValidateCategoriesTest extends CategoryTestBase {
 
 /**
  * Default save data
