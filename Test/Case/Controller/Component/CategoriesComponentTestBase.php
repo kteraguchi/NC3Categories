@@ -92,7 +92,7 @@ class CategoriesComponentTestBase extends YACakeTestCase {
 		'plugin.categories.category_order',
 		'plugin.frames.frame',
 		'plugin.m17n.language',
-		'plugin.m17n.languages_page',
+		'plugin.pages.languages_page',
 		'plugin.pages.page',
 		'plugin.roles.default_role_permission',
 		'plugin.rooms.room',
