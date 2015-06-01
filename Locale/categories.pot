@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-05 13:20+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,26 +13,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Categories/Model/Category.php:101
-#: Categories/Test/Case/Model/CategoryTestValidateCategory.php:150
-#: Categories/View/Elements/edit_form.ctp:23
-#: Categories/View/Elements/index.ctp:22
-#: Faqs/View/Elements/FaqQuestions/edit_form.ctp:59
-#: Faqs/View/FaqQuestionOrders/edit.ctp:53
+#: Blogs/View/BlogEntriesEdit/form.ctp:181
+#: Categories/Model/Category.php:102
+#: Categories/Test/Case/Model/CategoryValidateCategoryTest.php:121
+#: Categories/View/Elements/edit_form.ctp:22
+#: Faqs/View/Elements/FaqQuestions/edit_form.ctp:67
+#: Faqs/View/FaqQuestionOrders/edit.ctp:54
 #: Links/View/Elements/Links/edit_form.ctp:114
 #: Links/View/Links/view.ctp:47
 msgid "Category"
 msgstr ""
 
-#: Categories/View/Elements/edit_form.ctp:43
-#: Categories/View/Elements/index.ctp:35
-#: Faqs/View/FaqQuestionOrders/edit.ctp:42
-msgid "No category."
-msgstr ""
-
-#: Faqs/View/Elements/FaqQuestions/edit_form.ctp:63
+#: Blogs/View/BlogEntriesEdit/form.ctp:185
+#: Faqs/View/Elements/FaqQuestions/edit_form.ctp:71
 #: Faqs/View/Elements/FaqQuestions/select_category.ctp:21
 #: Links/View/Elements/Links/edit_form.ctp:118
 msgid "Select Category"
+msgstr ""
+
+#: Categories/View/Elements/edit_form.ctp:33
+msgid "No category."
 msgstr ""
 
