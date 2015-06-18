@@ -15,7 +15,15 @@
 
 <?php echo $this->Html->script('/categories/js/categories.js', false); ?>
 
-<?php $this->Form->unlockField('Categories'); ?>
+<?php
+$this->Form->unlockField('Categories');
+
+$categoryIds = Hash::extract($categories, '{n}.category.id');
+foreach ($categoryIds as $key => $categoryId) {
+	$fieldName = 'CategoryIds.' . $key . '.id';
+	echo $this->Form->hidden($fieldName, array('value' => $categoryId));
+}
+?>
 
 <div class="panel panel-default" ng-controller="Categories" ng-init="initialize(<?php echo h(json_encode(['categories' => $categories])); ?>)">
 	<div class="panel-heading">

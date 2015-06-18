@@ -150,6 +150,13 @@ class Category extends CategoriesAppModel {
 
 		$categoryKeys = Hash::combine($data['Categories'], '{n}.Category.key', '{n}.Category.key');
 
+		$categoryIds = Hash::extract($data['Categories'], '{n}.Category.id');
+		$oldCategoryIds = array();
+		if (is_array($data['CategoryIds'])) {
+			$oldCategoryIds = Hash::extract($data['CategoryIds'], '{n}.id');
+		}
+		$categoryIds = array_intersect($oldCategoryIds, $categoryIds);
+
 		//削除処理
 		$conditionsCategory = array(
 			'block_id' => $data['Block']['id']
@@ -173,6 +180,10 @@ class Category extends CategoriesAppModel {
 				$indexes = array_keys($data['Categories']);
 		foreach ($indexes as $i) {
 			$category = $data['Categories'][$i];
+			if (!in_array($category['Category']['id'], $oldCategoryIds, true)) {
+				$category['Category']['id'] = '';
+			}
+
 			$category['Category']['block_id'] = (int)$data['Block']['id'];
 			if (! $category = $this->save($category, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
